@@ -1,0 +1,4 @@
+FROM postgres:15-alpine
+
+ENV POSTGRES_DB=agent_marketplace
+ENV POSTGRES_USER=postgres

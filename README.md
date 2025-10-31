@@ -2,6 +2,21 @@
 
 A full-featured marketplace for AI agents where users can create, share, fork, and deploy Python-based AI agents.
 
+## 🌐 Quick Deploy Online (Free!)
+
+Deploy your own instance to the cloud in minutes:
+
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/-PqHHD)
+
+Or use our automated script:
+```bash
+./deploy-online.sh
+```
+
+**See [DEPLOY_ONLINE.md](DEPLOY_ONLINE.md) or [ONE_CLICK_DEPLOY.md](ONE_CLICK_DEPLOY.md) for detailed instructions.**
+
+---
+
 ## 🚀 Features
 
 ### User Features
@@ -26,6 +41,23 @@ A full-featured marketplace for AI agents where users can create, share, fork, a
 - OR Python 3.11+, Node.js 18+, and PostgreSQL 15+
 
 ## 🛠️ Installation & Setup
+
+### Quick Deploy Online (Free) 🌐
+
+Deploy to free hosting platforms in minutes:
+
+**Option 1: Railway.app (Recommended)**
+```bash
+./deploy-online.sh
+```
+
+**Option 2: Manual deployment**
+See [DEPLOY_ONLINE.md](DEPLOY_ONLINE.md) for step-by-step guides for:
+- Railway.app (all-in-one)
+- Render.com (blueprint deployment)
+- Vercel (frontend) + Railway (backend)
+
+### Local Development Setup
 
 ### Option 1: Using Docker (Recommended)
 
