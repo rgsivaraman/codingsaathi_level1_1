@@ -4,16 +4,30 @@ A full-featured marketplace for AI agents where users can create, share, fork, a
 
 ## 🌐 Quick Deploy Online (Free!)
 
-Deploy your own instance to the cloud in minutes:
+Deploy your own instance to the cloud in minutes - **no coding required!**
 
+### Option 1: Railway.app (Easiest - Recommended)
+1. Sign up at [Railway.app](https://railway.app) with GitHub
+2. Click "New Project" → "Deploy from GitHub repo"
+3. Select this repository
+4. Follow the setup wizard
+5. **Done!** Your app will be live in ~10 minutes
+
+**📖 Detailed Guide:** [DEPLOY_QUICKSTART.md](DEPLOY_QUICKSTART.md) - Step-by-step with screenshots
+
+### Option 2: One-Click Deploy
 [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/-PqHHD)
 
-Or use our automated script:
+### Option 3: Automated Script
 ```bash
 ./deploy-online.sh
 ```
 
-**See [DEPLOY_ONLINE.md](DEPLOY_ONLINE.md) or [ONE_CLICK_DEPLOY.md](ONE_CLICK_DEPLOY.md) for detailed instructions.**
+**📚 All Deployment Guides:**
+- [DEPLOY_QUICKSTART.md](DEPLOY_QUICKSTART.md) - Beginner-friendly guide
+- [DEPLOY_ONLINE.md](DEPLOY_ONLINE.md) - Complete deployment options
+- [ONE_CLICK_DEPLOY.md](ONE_CLICK_DEPLOY.md) - One-click buttons
+- [DEPLOYMENT_DIAGRAM.md](DEPLOYMENT_DIAGRAM.md) - Visual deployment flow
 
 ---
 
