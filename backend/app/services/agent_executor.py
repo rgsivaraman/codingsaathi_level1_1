@@ -1,14 +1,22 @@
-import asyncio
 import json
 from typing import Dict, Any
 from app.schemas.schemas import AgentExecuteResponse
 
 
-async def execute_agent_code(code: str, input_data: Dict[str, Any]) -> AgentExecuteResponse:
+def execute_agent_code(code: str, input_data: Dict[str, Any]) -> AgentExecuteResponse:
     """
     Execute agent code in a sandboxed environment.
-    For production, this should use Docker containers for isolation.
-    This is a simplified version using exec with restricted globals.
+    
+    WARNING: This is a basic sandboxing implementation suitable for trusted environments.
+    For production use with untrusted code, implement proper containerized execution
+    using Docker containers or similar isolation mechanisms.
+    
+    Args:
+        code: Python code to execute
+        input_data: Input data dictionary for the agent
+        
+    Returns:
+        AgentExecuteResponse with success status, output, or error
     """
     try:
         # Create a restricted execution environment
@@ -47,7 +55,7 @@ async def execute_agent_code(code: str, input_data: Dict[str, Any]) -> AgentExec
         
         restricted_globals['__builtins__']['print'] = custom_print
         
-        # Execute code with timeout
+        # Execute code
         local_vars = {}
         exec(code, restricted_globals, local_vars)
         

@@ -206,7 +206,7 @@ async def fork_agent(
 
 
 @router.post("/execute", response_model=AgentExecuteResponse)
-async def execute_agent(
+def execute_agent(
     request: AgentExecuteRequest,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_active_user)
@@ -215,8 +215,8 @@ async def execute_agent(
     if not agent:
         raise HTTPException(status_code=404, detail="Agent not found")
     
-    # Execute agent code
-    result = await execute_agent_code(agent.code, request.input_data)
+    # Execute agent code (now synchronous)
+    result = execute_agent_code(agent.code, request.input_data)
     
     # Increment usage count
     agent.usage_count += 1

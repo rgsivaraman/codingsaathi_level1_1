@@ -167,8 +167,10 @@ result = text[::-1]
 - **Authentication**: JWT tokens with configurable expiration
 - **Password Hashing**: bcrypt for secure password storage
 - **Code Execution**: Sandboxed Python execution with restricted builtins
+  - **Note**: The current sandboxing is suitable for trusted environments. For production use with untrusted code, implement proper containerized execution using Docker containers or similar isolation mechanisms.
 - **CORS**: Configurable allowed origins
 - **SQL Injection**: Protected via SQLAlchemy ORM
+- **Secret Key**: Auto-generated unique key per deployment (override via environment variable for production)
 
 ## 📚 API Documentation
 

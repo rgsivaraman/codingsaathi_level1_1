@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { agentsAPI, ratingsAPI, reviewsAPI } from '../services/api';
+import Notification from '../components/Notification';
 import './AgentDetail.css';
 
 function AgentDetail() {
@@ -13,11 +14,17 @@ function AgentDetail() {
   const [review, setReview] = useState('');
   const [executeInput, setExecuteInput] = useState('{}');
   const [executeResult, setExecuteResult] = useState(null);
+  const [notification, setNotification] = useState(null);
 
   useEffect(() => {
     loadAgent();
     loadReviews();
   }, [id]);
+
+  const showNotification = (message, type = 'info') => {
+    setNotification({ message, type });
+    setTimeout(() => setNotification(null), 5000);
+  };
 
   const loadAgent = async () => {
     try {
@@ -25,6 +32,7 @@ function AgentDetail() {
       setAgent(response.data);
     } catch (error) {
       console.error('Error loading agent:', error);
+      showNotification('Failed to load agent', 'error');
     } finally {
       setLoading(false);
     }
@@ -42,9 +50,10 @@ function AgentDetail() {
   const handleFork = async () => {
     try {
       const response = await agentsAPI.fork(id);
-      navigate(`/agent/${response.data.id}`);
+      showNotification('Agent forked successfully!', 'success');
+      setTimeout(() => navigate(`/agent/${response.data.id}`), 1500);
     } catch (error) {
-      alert('Error forking agent: ' + (error.response?.data?.detail || error.message));
+      showNotification('Error forking agent: ' + (error.response?.data?.detail || error.message), 'error');
     }
   };
 
@@ -52,9 +61,9 @@ function AgentDetail() {
     try {
       await ratingsAPI.create({ agent_id: parseInt(id), rating });
       loadAgent();
-      alert('Rating submitted successfully!');
+      showNotification('Rating submitted successfully!', 'success');
     } catch (error) {
-      alert('Error submitting rating: ' + (error.response?.data?.detail || error.message));
+      showNotification('Error submitting rating: ' + (error.response?.data?.detail || error.message), 'error');
     }
   };
 
@@ -63,9 +72,9 @@ function AgentDetail() {
       await reviewsAPI.create({ agent_id: parseInt(id), comment: review });
       setReview('');
       loadReviews();
-      alert('Review submitted successfully!');
+      showNotification('Review submitted successfully!', 'success');
     } catch (error) {
-      alert('Error submitting review: ' + (error.response?.data?.detail || error.message));
+      showNotification('Error submitting review: ' + (error.response?.data?.detail || error.message), 'error');
     }
   };
 
@@ -74,11 +83,18 @@ function AgentDetail() {
       const inputData = JSON.parse(executeInput);
       const response = await agentsAPI.execute(parseInt(id), inputData);
       setExecuteResult(response.data);
-    } catch (error) {
-      setExecuteResult({
-        success: false,
-        error: error.response?.data?.detail || error.message
-      });
+    } catch (parseError) {
+      if (parseError instanceof SyntaxError) {
+        setExecuteResult({
+          success: false,
+          error: 'Invalid JSON format. Please check your input.'
+        });
+      } else {
+        setExecuteResult({
+          success: false,
+          error: parseError.response?.data?.detail || parseError.message
+        });
+      }
     }
   };
 
@@ -92,6 +108,13 @@ function AgentDetail() {
 
   return (
     <div className="agent-detail">
+      {notification && (
+        <Notification 
+          message={notification.message} 
+          type={notification.type}
+          onClose={() => setNotification(null)}
+        />
+      )}
       <div className="agent-header">
         <h1>{agent.name}</h1>
         <div className="agent-actions">
